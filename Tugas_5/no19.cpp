@@ -1,68 +1,60 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
-#define N 8
+const int N = 8;
 
-int ld[30] = { 0 };
-int rd[30] = { 0 };
-int cl[30] = { 0 };
+vector<int> ld(30, 0);
+vector<int> rd(30, 0);
+vector<int> cl(30, 0);
 
-void printSolution(int board[N][N])
+void printSolution(vector<vector<int>>& board)
 {
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++)
-			cout << " " << board[i][j] << " ";
-		cout << endl;
-	}
+    for (auto& row : board)
+    {
+        for (int j : row)
+        {
+            cout << " " << j << " ";
+        }
+        cout << endl;
+    }
 }
 
-
-bool util(int board[N][N], int col)
+bool util(vector<vector<int>>& board, int col)
 {
-	
-	if (col >= N)
-		return true;
+    if (col >= N)
+        return true;
 
-	
-	for (int i = 0; i < N; i++) {
-	
-		if ((ld[i - col + N - 1] != 1 && rd[i + col] != 1)
-			&& cl[i] != 1) {
-			
-			
-			board[i][col] = 1;
-			ld[i - col + N - 1] = rd[i + col] = cl[i] = 1;
+    for (int i = 0; i < N; i++) {
+        if (ld[i - col + N - 1] != 1 && rd[i + col] != 1 && cl[i] != 1) {
+            board[i][col] = 1;
+            ld[i - col + N - 1] = rd[i + col] = cl[i] = 1;
 
-			if (util(board, col + 1))
-				return true;
+            if (util(board, col + 1))
+                return true;
 
-			board[i][col] = 0; 
-			ld[i - col + N - 1] = rd[i + col] = cl[i] = 0;
-		}
-	}
+            board[i][col] = 0;
+            ld[i - col + N - 1] = rd[i + col] = cl[i] = 0;
+        }
+    }
 
-	
-	return false;
+    return false;
 }
 
 bool solveNQ()
 {
-	int board[N][N] = { { 0, 0, 0, 0 },
-						{ 0, 0, 0, 0 },
-						{ 0, 0, 0, 0 },
-						{ 0, 0, 0, 0 } };
+    vector<vector<int>> board(N, vector<int>(N, 0));
 
-	if (util(board, 0) == false) {
-		cout << "Solution does not exist";
-		return false;
-	}
+    if (!util(board, 0)) {
+        cout << "Solution does not exist";
+        return false;
+    }
 
-	printSolution(board);
-	return true;
+    printSolution(board);
+    return true;
 }
 
 int main()
 {
-	solveNQ();
-	return 0;
+    solveNQ();
+    return 0;
 }
-

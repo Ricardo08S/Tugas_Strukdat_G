@@ -2,42 +2,43 @@
 #include <stack>
 
 using namespace std;
-void sortStack(stack<int>& S1) {
-  stack<int> S2;
+void sortStack(stack<int>& stack1) {
+  stack<int> st_tmp;
 
-  while (!S1.empty()) {
-    int temp = S1.top();
-    S1.pop();
+  while (!stack1.empty()) {
+    int temp = stack1.top();
+    stack1.pop();
 
-    while (!S2.empty() && S2.top() > temp) {
-      S1.push(S2.top());
-      S2.pop();
+    while (!st_tmp.empty() && st_tmp.top() > temp) {
+      stack1.push(st_tmp.top());
+      st_tmp.pop();
     }
 
-    S2.push(temp);
+    st_tmp.push(temp);
   }
 
-  while (!S2.empty()) {
-    S1.push(S2.top());
-    S2.pop();
+  while (!st_tmp.empty()) {
+    stack1.push(st_tmp.top());
+    st_tmp.pop();
   }
 }
 
 int main() {
-  stack<int> S1;
+  stack<int> stack1;
 
-  S1.push(100);
-  S1.push(5);
-  S1.push(3);
-  S1.push(8);
-  S1.push(1);
-  S1.push(2);
+  stack1.push(100);
+  stack1.push(190);
+  stack1.push(5);
+  stack1.push(3);
+  stack1.push(8);
+  stack1.push(1);
+  stack1.push(2);
 
-  sortStack(S1);
+  sortStack(stack1);
 
-  while (!S1.empty()) {
-    cout << S1.top() << " ";
-    S1.pop();
+  while (!stack1.empty()) {
+    cout << stack1.top() << " ";
+    stack1.pop();
   }
   cout << endl;
 
